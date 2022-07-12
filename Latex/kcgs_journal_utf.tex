@@ -133,7 +133,8 @@
 
 %% Abstract.
 \begin{abstract}
-편광해석법(Ellipsometry)을 사용하면 물질의 편광 정보를 측정할 수 있으나 다양한 구성의 조명과 센서로 구성된 광학 부품의 정밀한 회전을 요구한다. 이로 인해 실험실 조건에서 정밀하게 캘리브레이션된 복잡한 촬영 장치에서 생성되며 일반적으로 오브젝트당 며칠 정도의 매우 긴 촬영 시간이 소요된다. 
+편광해석법(Ellipsometry)을 사용하면 물질의 편광 정보를 측정할 수 있으나 다양한 구성의 조명과 센서로 구성된 광학 부품의 정밀한 회전을 요구한다. 
+%이로 인해 실험실 조건에서 정밀하게 캘리브레이션된 복잡한 촬영 장치에서 생성되며 일반적으로 오브젝트당 며칠 정도의 매우 긴 촬영 시간이 소요된다. 
 %최근의 기술을 사용하면 편광의 공간적으로 변화하는(spatially-varying) 반사율 정보를 촬영할 수 있지만 단일 시점으로 제한되거나 모든 시점을 촬영할 수 있지만 오브젝트가 단일 균질 물질로 만들어진 구형 물체로 제한된다. 
 본 연구는 편광 SVBRDF와 3D 형상을 동시에 촬영하는 휴대용 편광 획득 방법인 Sparse ellipsometry를 소개한다. 
 %우리의 휴대용 장치는 기성품의 고정 광학 부품으로 구성되어 있다. 총 촬영 시간은 며칠이 아닌 개체당 20분에서 30분 사이이다. 
@@ -167,10 +168,10 @@
 
 %편광해석법은 광학 측정을 사용하여 물질과의 상호 작용이 입사광의 편광 상태를 변경하는 방식을 특정한다~\cite{azzam2016stokes}. 
 %최근의 이미지 기반 편광해석법에는 두 가지 주요 접근 방식이 있다. 실제 물체의 편광 SVBRDF를 캡처할 수 있지만 단일 시점으로 제한되는 방식과~\cite{Baek2018} 편광 정보를 모든 시야 방향에서 측정할 수 있지만 하나의 균질한 단일 물질로 구성된 구형 물체로 제한되는 방식이 있다~\cite{Baek2020}. 
-최근의 기술을 사용하면 편광의 공간적으로 변화하는(spatially-varying) 반사율 정보를 촬영할 수 있지만 단일 시점으로 제한되거나 모든 시점을 촬영할 수 있지만 오브젝트가 단일 균질 물질로 만들어진 구형 물체로 제한된다.
-또한 며칠 정도의 긴 촬영시간을 요구하며 정교한 광학 테이블 구성과 회전하는 광학 장비가 필요하다.
+%최근의 기술을 사용하면 편광의 공간적으로 변화하는(spatially-varying) 반사율 정보를 촬영할 수 있지만 단일 시점으로 제한되거나 모든 시점을 촬영할 수 있지만 오브젝트가 단일 균질 물질로 만들어진 구형 물체로 제한된다.
+%또한 며칠 정도의 긴 촬영시간을 요구하며 정교한 광학 테이블 구성과 회전하는 광학 장비가 필요하다.
 본 연구는 임의의 기하구조뿐만 아니라 모든 시점 방향에서 공간적으로 변하는 편광 물체를 동시에 촬영할 수 있는 최초의 연구이다. 기성품의 편광 카메라와 회전 요소가 필요 없는 선형 편광판이 달린 플래시라이트를 결합한 휴대용 장치를 이용한다. 
-실제 데이터와 정확하게 일치하는 결과물을 내며 촬영 시간은 기존 접근 방식과 같이 며칠이 아닌 20분에서 30분 사이에 불과하다.
+실제 데이터와 정확하게 일치하는 결과물을 내며 촬영 시간은 기존 접근 방식의 며칠이 아닌 20분에서 30분 사이이다.
 
 구조화되지 않은 희박하게 촬영된 이미지 세트에서 인버스 렌더링을 포함하는 최적화 알고리즘을 사용하여 편광 반사율과 3D 모양을 복원한다. 
 난반사 및 정반사뿐만 아니라 단일 산란도 포함된 새로운 편광 SVBRDF 모델을 제안하며, 최근 연구의 실제 데이터셋을 통해 일치함을 확인한다.
@@ -182,62 +183,74 @@
 
 \subsection{편광 반사도 모형}
 \label{subsec:model}
-
-10 페이지 이내.
+우리의 편광 반사도(pBRDF) 모형은 3가지의 반사 형태로 구성되며, 아래와 같이 표현할 수 있다.
+\begin{equation}
+	\label{eq:diffuse_and_specular}
+	\mathbf{P}={{\mathbf{P}}^{d}}+{{\mathbf{P}}^{s}}+{{\mathbf{P}}^{ss}}.
+\end{equation}
+${\mathbf{P}}$는 뮐러 행렬로 표현되는 pBRDF이며,  ${\mathbf{P}}^{d}$, ${\mathbf{P}}^{s}$ 및 ${\mathbf{P}}^{ss}$는 각각 난반사, 정반사, 단일 산란의 pBRDF이다.
+난반사와 정반사의 pBRDF 모형은 Baek et al.\cite{Baek2018}의 모형을 따른다.
+%난반사는 빛이 공기에서 매질로 투과 후 여러번의 산란을 거쳐 편광 성분을 모두 잃고, 다시 매질에서 공기로 투과되며 투과에 따른 프레넬 효과를 통해 편광 성분을 갖게 된다.
+%정반사는 microfacet 모형을 따르며 각 microfacet 법선에서의 일반적인 반사로서 계산한다.
+그러나, 이러한 모델은 단일 산란으로 인하여 편광 성분을 보존한채로 투과되는 경우를 고려하지 못하였다. 
+%이러한 단일 산란은 아래의 특성을 갖는다:
+%\begin{itemize}
+%	\item 단일 산란은 정반사와 비슷한 편광 상태를 갖는다.
+%	\item 단일 산란의 거칠기(roughness)는 프레넬 투과와 산란의 위상함수로 만들어진다.
+%	\item 정반사는 색깔을 갖지 않으나, 단일 산란은 매질의 흡수에 의한 색을 갖는다.
+%\end{itemize}
+%위의 관측을 토대로, 인버스 렌더링을 위한 실용적인 단일 산란 모델은 다음과 같다. 
+단일 산란의 물리적인 특성을 토대로, 인버스 렌더링을 위한 실용적인 단일 산란 모델은 다음과 같다. 
+\begin{equation}
+	\label{eq:single_scattering_transport}
+	{{\mathbf{P}}^{ss}}= {{\kappa}_{ss}} {{\mathbf{C}}_{h\to o}}\left(-{\varphi_{o}} \right){{\mathbf{F}}^{R}}\left( {{\theta }_{d}};\eta  \right){{\mathbf{C}}_{i\to h}}\left({\varphi_{i}} \right).
+\end{equation}
+%
+$\kappa_{ss}$는 따른 단일 산란 분포 함수, $\mathbf{C}$는 좌표 변환, $\mathbf{F}^{R}$은 프레넬 반사 효과이다.
 
 
 \subsection{편광 SVBRDF와 기하 구조의 다중 시점 복원}
 \label{subsec:reconstruction}
 
-용지: A4, 가로쓰기. \\
-여백: 위쪽 30mm, 아래쪽 20mm, 왼쪽 10mm, 오른쪽 10mm.
+\begin{figure}[tpb]
+	\vspace{-2mm}%
+	\centering%
+	\footnotesize%
+	\includegraphics[width=1.0\linewidth]{fig/pipeline-workflow}%
+	\vspace{-3mm}%
+	\caption{\label{fig:workflow}%
+		본 연구 알고리즘의 개요. 편광 SVBRDF $\mathbf{P}$와 쉐이딩 노멀 $\mathbf{N}$의 계산과 3D 기하 구조 $\mathbf{X}$의 복원을 반복적으로 수행한다.
+	}
+	\vspace{-2mm}
+\end{figure}
+본 연구 알고리즘의 개요는 Figure~\ref{fig:workflow}와 같다. 먼저 편광 카메라를 포함하는 우리의 촬영 시스템을 통해 여러 시점에서 편광 플래시라이트 이미지를 얻는다. 촬영 시스템은 Figure~\ref{fig:teaser}에서 확인할 수 있다.
+이를 입력 데이터로 하여 편광 SVBRDF와 쉐이딩 노멀의 계산과 3D 기하 구조의 복원을 반복적으로 수행한다. 
+3D 기하 구조의 복원에는 푸아송 표면 재건을\cite{kazhdan2013screened} 이용한다.
+편광 SVBRDF와 쉐이딩 노멀의 계산에서는 4가지 로스로 구성된 아래의 최적화를 진행한다.
+%\begin{equation}
+%	\label{eq:optimization}
+%	{\min}_{\eta,\sigma_{s},\rho_s,{\rho}_{ss},{\rho_d},\mathbf{n}}\left( {{\lambda }_{1}}{{\mathcal{L}}_{\psi}}+{{\lambda }_{2}}{{\mathcal{L}}_{d}}+{{\lambda }_{3}}{{\mathcal{L}}_{s}}+{{\lambda }_{4}}{{\mathcal{L}}_{\phi}} \right),
+%\end{equation}
+\begin{equation}
+	\label{eq:optimization}
+	{\min}\left( {{\lambda }_{1}}{{\mathcal{L}}_{\psi}}+{{\lambda }_{2}}{{\mathcal{L}}_{d}}+{{\lambda }_{3}}{{\mathcal{L}}_{s}}+{{\lambda }_{4}}{{\mathcal{L}}_{\phi}} \right).
+\end{equation}
+%
+${{\mathcal{L}}_{\psi}}$, ${{\mathcal{L}}_{d}}$, ${{\mathcal{L}}_{s}}$, ${{\mathcal{L}}_{\phi}}$는 각각 굴절률, 난반사, 정반사 및 단일 산란, 그리고 노멀에 대한 로스 함수이다.
+정반사의 경우 촬영시의 샘플이 상대적으로 부족하다. 이를 해결하기 위해 우리는 두 단계의 정반사 증강 방법을 이용한다.
+먼저 비슷한 표면끼리 클러스터링을 이용하여 모델 파라미터를 만든다. 그 다음 가상 샘플들을 생성하여 함께 최적화에 사용한다.
+모델과 최적화의 자세한 내용은 원 논문에서 확인할 수 있다.
 
 
-\subsection{글꼴 및 크기}
-\label{subsec:paper_font}
-
-한글의 글꼴은 \{serif: 바탕, sans-serif: 고딕\}을 사용하며, 
-영문은 \{serif: Times New Roman, sans-serif: Helvetica\}를 사용한다. 
-본문의 내용은 기본적으로 serif 글꼴을 이용하여 작성한다.
-글꼴의 크기는 각각의 내용 뒤의 괄호 안에 명시된 바와 같다.
-
-본문의 줄 간격은 한글에서는 150\%, 워드에서는 1줄로 사용한다.
-
-
-\subsection{연구방법}
-\label{subsec:s}
-
-아래 순서대로 작성하며, 1$\sim$8항목은 1단 (column), 
-9$\sim$11 항목은 2단으로 구성한다.
-
-\begin{enumerate}
-	\item 제목 (국문)
-	\item 저자명 (국문), 발표자는 공동저자와 구분 처리한다 (예) 홍길동$^{\circ}$).
-	\item 소속 (국문)
-	\item 저자 e-mail address
-	\item 제목 (영문)
-	\item 저자명(국문), 발표자와 교신저자는 공동저자와 구분 처리한다. (예) 발표자: 홍길동$^{\circ}$, 교신저자: 홍길동$^{*}$)
-	\item 소속 (영문)
-	\item 요약
-	\item 본문
-	\begin{itemize}
-		\item[-] 장 및 절에 해당되는 번호는 아라비아 숫자로 각각 1., 1.1 등과 같이 표기한다.
-		\item[-] 그림의 명칭은 하단에, 표는 상단에 각각 Figure 1 및 Table 1로 표기하고 내용 또한 영문으로 작성한다.
-	\end{itemize}
-	\item 참고문헌
-	\begin{itemize}
-		\item[-] 본문 중에 참고문헌 번호를 쓰고, 그 문헌을 참고문헌란에 인용한 순서대로 기술한다.
-		\item[-] 기술 순서는 아래의 예와 같이 저자, 제목, 학술지명, 권, 호, 쪽수 발행년도 순으로 작성한다.
-	\end{itemize}
-	\item 부록 (해당사항이 있는 경우만 작성한다.)
-\end{enumerate}
-
-
-\section{검증 및 결과}
+\section{결과}
 \label{sec:results}
 
 논문 작성 시 절에 명시된 요령을 지켜 주시기 바랍니다.
 
+\section{결론}
+\label{sec:conclusion}
+
+논문 작성 시 절에 명시된 요령을 지켜 주시기 바랍니다.
 
 \section*{감사의 글}
 
