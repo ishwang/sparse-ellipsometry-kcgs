@@ -10,3 +10,5 @@ Latex/kcgs_journal_utf.pdf
 *.blg
 
 Latex/kcgs_journal_utf.bbl
+
+*.synctex(busy)
